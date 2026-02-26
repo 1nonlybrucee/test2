@@ -14,6 +14,16 @@ with sqlite3.connect('group_by.db') as connection:
         )'''
     )
 
+
+
     results = cursor.execute('SELECT product_name, SUM (quantity * price) FROM sales GROUP BY product_name')
     for result in results:
-        print(f'Product: {result[0]} = {result[1]}')
+        print(f'Total: {result[0]} = {result[1]}')
+    
+    results = cursor.execute('SELECT product_name, COUNT(sales_id), SUM(quantity) FROM sales GROUP BY product_name')
+    for result in results:
+        print(f'total transaction: {result[0]} = {result[1]}\n total sold: {result[2]}')
+
+    haha = cursor.execute('SELECT strftime("%Y-%m", sales_date) as month, SUM(quantity * price) as total_revenue FROM sales GROUP BY month')
+    for hah in haha:
+        print(f'Month: {hah[0]} - REVENUE: {hah[1]}')
